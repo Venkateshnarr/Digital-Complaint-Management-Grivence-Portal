@@ -1,0 +1,212 @@
+/* Split Screen Layout */
+.registration-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: white;
+  padding-top: 0;
+}
+
+/* Left Side: Image */
+.registration-image {
+  flex: 1;
+  position: relative;
+  background: url('../../../assets/images/auth-side.png') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.registration-image .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(59, 130, 246, 0.2) 100%);
+  z-index: 1;
+}
+
+.image-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  padding: 3rem;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  margin-top: 80px;
+  /* Offset for image content */
+}
+
+.image-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.image-content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Right Side: Form */
+.registration-form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  padding-top: 140px;
+  /* Offset for fixed navbar */
+  background: white;
+  overflow-y: auto;
+  /* Ensure form is scrollable on small screens */
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out 0.2s forwards;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 500px;
+  /* Removed padding/bg/shadow as container is wrapper */
+}
+
+/* Existing Form Styles */
+.registration-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.registration-header h3 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.registration-header p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--primary-light);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.visibility-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.error-text {
+  color: var(--danger-color);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.message {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  background: #FEF2F2;
+  color: var(--danger-color);
+}
+
+.success-message {
+  background: #ECFDF5;
+  color: var(--success-color);
+}
+
+.login-prompt {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.login-prompt a {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.spinner {
+  margin-right: 0.5rem;
+}
+
+mat-spinner {
+  display: inline-block;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .registration-image {
+    display: none;
+  }
+
+  .registration-form-container {
+    padding-top: 100px;
+  }
+
+  .registration-container {
+    padding: 1rem;
+  }
+
+  .registration-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .registration-form-container {
+    padding-top: 80px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

@@ -1,0 +1,260 @@
+<div class="details-container">
+    <!-- Loading -->
+    <div class="loading-container" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+        <p>Loading complaint details...</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error</mat-icon>
+        {{errorMessage}}
+    </div>
+
+    <!-- Complaint Details Card -->
+    <mat-card *ngIf="!loading && complaint" class="details-card">
+        <mat-card-header>
+            <mat-card-title>
+                <span class="complaint-id">{{complaint.complaint_unique_id || ('#' + complaint.id)}}</span>
+                <span class="title-separator">|</span>
+                {{complaint.title}}
+            </mat-card-title>
+            <span class="status-badge" [ngClass]="getStatusClass(complaint.status)">
+                {{complaint.status}}
+            </span>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="info-grid">
+                <!-- Category -->
+                <div class="info-item">
+                    <mat-icon>{{getCategoryIcon(complaint.category)}}</mat-icon>
+                    <div>
+                        <label>Category</label>
+                        <p>{{complaint.category | titlecase}}</p>
+                    </div>
+                </div>
+
+                <!-- Submitted By -->
+                <div class="info-item">
+                    <mat-icon>person</mat-icon>
+                    <div>
+                        <label>Submitted By</label>
+                        <p>{{complaint.user_name || 'Unknown'}}</p>
+                    </div>
+                </div>
+
+                <!-- Assigned To -->
+                <div class="info-item">
+                    <mat-icon>engineering</mat-icon>
+                    <div>
+                        <label>Assigned To</label>
+                        <p>{{complaint.staff_name || 'Not assigned'}}</p>
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="info-item">
+                    <mat-icon>calendar_today</mat-icon>
+                    <div>
+                        <label>Submitted On</label>
+                        <p>{{complaint.created_at | date:'medium'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="description-section">
+                <h3>
+                    <mat-icon>description</mat-icon>
+                    Description
+                </h3>
+                <p>{{complaint.description}}</p>
+            </div>
+
+            <!-- Attachments -->
+            <div class="attachments-section" *ngIf="complaint.attachments">
+                <h3>
+                    <mat-icon>attach_file</mat-icon>
+                    Attachments
+                </h3>
+                <div class="file-links">
+                    <a *ngFor="let file of parseAttachments(complaint.attachments)" [href]="getFileUrl(file.path)"
+                        target="_blank" class="file-link">
+                        <mat-icon>insert_drive_file</mat-icon>
+                        {{file.filename}}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Resolution Notes & Proof -->
+            <div class="resolution-section" *ngIf="complaint.resolution_notes || complaint.resolution_attachments">
+                <h3>
+                    <mat-icon>task_alt</mat-icon>
+                    Resolution Details
+                </h3>
+                <div class="resolution-info">
+                    <div *ngIf="complaint.resolution_notes">
+                        <label>Notes:</label>
+                        <p>{{complaint.resolution_notes}}</p>
+                    </div>
+                    <div *ngIf="complaint.resolution_attachments" class="proof-display">
+                        <label>Resolution Proof:</label>
+                        <div class="file-links">
+                            <a *ngFor="let file of parseAttachments(complaint.resolution_attachments)"
+                                [href]="getFileUrl(file.path)" target="_blank" class="file-link proof">
+                                <mat-icon>verified</mat-icon>
+                                {{file.filename}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="timeline-section">
+                <h3>
+                    <mat-icon>timeline</mat-icon>
+                    Status Flow
+                </h3>
+                <div class="status-flow">
+                    <div class="flow-item"
+                        [class.active]="complaint.status === 'Open' || complaint.status === 'Assigned' || complaint.status === 'In-progress' || complaint.status === 'Resolved'">
+                        <div class="flow-dot"></div>
+                        <span>Open</span>
+                    </div>
+                    <div class="flow-line"
+                        [class.active]="complaint.status === 'Assigned' || complaint.status === 'In-progress' || complaint.status === 'Resolved'">
+                    </div>
+                    <div class="flow-item"
+                        [class.active]="complaint.status === 'Assigned' || complaint.status === 'In-progress' || complaint.status === 'Resolved'">
+                        <div class="flow-dot"></div>
+                        <span>Assigned</span>
+                    </div>
+                    <div class="flow-line"
+                        [class.active]="complaint.status === 'In-progress' || complaint.status === 'Resolved'"></div>
+                    <div class="flow-item"
+                        [class.active]="complaint.status === 'In-progress' || complaint.status === 'Resolved'">
+                        <div class="flow-dot"></div>
+                        <span>In-progress</span>
+                    </div>
+                    <div class="flow-line" [class.active]="complaint.status === 'Resolved'"></div>
+                    <div class="flow-item" [class.active]="complaint.status === 'Resolved'">
+                        <div class="flow-dot"></div>
+                        <span>Resolved</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audit Trail (History) -->
+            <div class="audit-section" *ngIf="logs.length > 0">
+                <h3><mat-icon>history</mat-icon> Audit History</h3>
+                <div class="audit-list">
+                    <div class="audit-item" *ngFor="let log of logs">
+                        <div class="audit-icon-wrapper">
+                            <div class="audit-line"></div>
+                            <mat-icon class="audit-icon">
+                                {{ log.action === 'CREATED' ? 'add_circle' :
+                                log.action === 'STATUS_CHANGE' ? 'sync_alt' :
+                                log.action === 'ASSIGNED' ? 'person_add' :
+                                log.action.includes('AUTO') ? 'smart_toy' : 'info' }}
+                            </mat-icon>
+                        </div>
+                        <div class="audit-content">
+                            <p class="audit-action">{{ log.action }} <span class="audit-date">{{ log.created_at |
+                                    date:'medium' }}</span></p>
+                            <p class="audit-details">by {{ log.user_name || 'System (Auto)' }} ({{log.user_role ||
+                                'Bot'}})</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="action-buttons">
+            <button mat-button (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+                Back
+            </button>
+
+            <!-- Feedback Display for Resolved Complaints -->
+            <div class="feedback-display" *ngIf="complaint.status === 'Resolved' && complaint.rating">
+                <div class="rating-stars">
+                    <mat-icon *ngFor="let i of [1,2,3,4,5]"
+                        [style.color]="i <= complaint.rating! ? '#ffb400' : '#e2e8f0'">
+                        star
+                    </mat-icon>
+                </div>
+                <p class="feedback-text">"{{complaint.feedback}}"</p>
+            </div>
+
+            <!-- Feedback Form for Users -->
+            <button mat-raised-button color="accent"
+                *ngIf="authService.userRole === 'User' && complaint.status === 'Resolved' && !complaint.rating && !showFeedbackForm"
+                (click)="showFeedbackForm = true">
+                Rate Service
+            </button>
+
+            <!-- Status & Effort Update Section for Staff -->
+            <div class="staff-actions-container"
+                *ngIf="authService.userRole === 'Staff' && complaint.status !== 'Resolved'">
+
+                <div class="update-controls">
+                    <mat-form-field appearance="outline" class="status-select">
+                        <mat-label>Update Status</mat-label>
+                        <mat-select [(value)]="selectedStatus">
+                            <mat-option *ngFor="let status of getValidStatuses()" [value]="status">
+                                {{status}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="resolution-upload">
+                        <button mat-stroked-button type="button" (click)="resFileInput.click()">
+                            <mat-icon>upload</mat-icon>
+                            {{ selectedResolutionFile ? 'Proof Added' : 'Add Proof (Image/PDF)' }}
+                        </button>
+                        <input #resFileInput type="file" (change)="onFileSelected($event)" style="display: none;"
+                            accept=".jpg,.jpeg,.png,.pdf">
+                        <span class="file-name-hint"
+                            *ngIf="selectedResolutionFile">{{selectedResolutionFile.name}}</span>
+                    </div>
+
+                    <button mat-raised-button color="primary"
+                        [disabled]="selectedStatus === complaint.status && !selectedResolutionFile"
+                        (click)="updateStatus()">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Feedback Form Overlay/Section -->
+    <mat-card class="feedback-form-card animate-fade-in-up" *ngIf="showFeedbackForm">
+        <mat-card-header>
+            <mat-card-title>Rate our Service</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>How would you rate the resolution of this complaint?</p>
+            <div class="star-rating">
+                <button mat-icon-button *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)">
+                    <mat-icon [style.color]="star <= rating ? '#ffb400' : '#e2e8f0'">
+                        {{star <= rating ? 'star' : 'star_border' }} </mat-icon>
+                </button>
+            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Your Feedback (Thank You Note)</mat-label>
+                <textarea matInput rows="3" [(ngModel)]="feedback"
+                    placeholder="Write a short note about the service..."></textarea>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button (click)="showFeedbackForm = false">Cancel</button>
+            <button mat-raised-button color="primary" [disabled]="rating === 0 || !feedback || submittingFeedback"
+                (click)="submitFeedback()">
+                Submit Feedback
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

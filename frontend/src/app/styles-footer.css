@@ -1,0 +1,153 @@
+/* Premium Footer Styles - Dark Mode */
+.footer {
+    margin-top: auto;
+    background: #000000;
+    /* Pure Black */
+    color: #94a3b8;
+    /* Slate 400 */
+    padding: 4rem 0 2rem;
+    font-family: var(--font-body);
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #1e293b;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 10;
+    padding: 0 1rem;
+}
+
+.footer-brand h3 {
+    color: #ffffff;
+    /* White */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+.footer-brand p {
+    color: #94a3b8;
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+.footer-links-group,
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-links-group h4,
+.footer-info h4 {
+    color: #ffffff;
+    /* White */
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.footer-links-group a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links-group a:hover {
+    color: #ffffff;
+    /* White hover */
+    transform: translateX(4px);
+}
+
+.footer-info p {
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+}
+
+.footer-contact-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.footer-contact-link:hover {
+    color: #ffffff;
+}
+
+.footer-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: #1e293b;
+    /* Slate 800 */
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.footer-info p:hover .footer-icon-wrapper {
+    background: #334155;
+    /* Slate 700 */
+    transform: scale(1.1);
+}
+
+/* Snackbar Styles */
+.success-snackbar {
+    --mdc-snackbar-container-color: #10B981;
+    --mat-snack-bar-button-color: #ffffff;
+}
+
+.error-snackbar {
+    --mdc-snackbar-container-color: #EF4444;
+    --mat-snack-bar-button-color: #ffffff;
+}
+
+.info-snackbar {
+    --mdc-snackbar-container-color: #000000;
+    --mat-snack-bar-button-color: #ffffff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #64748b;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer {
+        padding: 3rem 0 1.5rem;
+    }
+}

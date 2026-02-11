@@ -1,0 +1,88 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+// Components
+import { RegistrationComponent } from './components/registration/registration.component';
+import { LoginComponent } from './components/login/login.component';
+import { ComplaintListComponent } from './components/complaint-list/complaint-list.component';
+import { NewComplaintComponent } from './components/new-complaint/new-complaint.component';
+import { ComplaintDetailsComponent } from './components/complaint-details/complaint-details.component';
+import { StaffDashboardComponent } from './components/staff-dashboard/staff-dashboard.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { HomeComponent } from './components/home/home.component';
+import { TrackComplaintComponent } from './components/track-complaint/track-complaint.component';
+import { AdminAnalyticsComponent } from './components/admin-analytics/admin-analytics.component';
+import { ProfileComponent } from './components/profile/profile.component';
+
+// Guards
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
+
+const routes: Routes = [
+  // Public Routes
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent },
+
+  // User Routes (Protected)
+  {
+    path: 'track-complaint',
+    component: TrackComplaintComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'complaints',
+    component: ComplaintListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'complaints/new',
+    component: NewComplaintComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['User'] }
+  },
+  {
+    path: 'complaints/:id',
+    component: ComplaintDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+
+  // Staff Routes (Role Protected)
+  {
+    path: 'staff/dashboard',
+    component: StaffDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Staff'] }
+  },
+
+  // Admin Routes (Role Protected - Optional)
+  {
+    path: 'admin/dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin'] }
+  },
+  {
+    path: 'admin/analytics',
+    component: AdminAnalyticsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin'] }
+  },
+
+  // Wildcard Route
+  { path: '**', redirectTo: '/' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, {
+    anchorScrolling: 'enabled',
+    scrollPositionRestoration: 'enabled'
+  })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

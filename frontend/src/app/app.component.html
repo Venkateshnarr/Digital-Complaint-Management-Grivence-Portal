@@ -1,0 +1,147 @@
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="nav-content">
+    <a (click)="navigateToDashboard()" class="logo" style="cursor: pointer;">
+      <mat-icon style="margin-right: 0.5rem; color: #000;">security</mat-icon>
+      ResolveDesk
+    </a>
+
+    <!-- Pill Container for Main Links -->
+    <div class="nav-links-pill-container" [class.mobile-active]="isMobileMenuOpen">
+      <!-- Guest Links -->
+      <ng-container *ngIf="!authService.isLoggedIn">
+        <a routerLink="/" routerLinkActive="nav-item-active" [routerLinkActiveOptions]="{exact: true}"
+          class="nav-item">Home</a>
+        <a routerLink="/" fragment="how-it-works" class="nav-item">Works</a>
+        <a routerLink="/" fragment="features" class="nav-item">Features</a>
+        <a routerLink="/login" routerLinkActive="nav-item-active" class="nav-item">Login</a>
+        <a routerLink="/register" routerLinkActive="nav-item-active" class="nav-item mobile-only"
+          style="color: var(--accent-color);">Register</a>
+      </ng-container>
+
+      <!-- User Links -->
+      <ng-container *ngIf="authService.isLoggedIn && authService.userRole === 'User'">
+        <a routerLink="/" routerLinkActive="nav-item-active" [routerLinkActiveOptions]="{exact: true}"
+          class="nav-item">Home</a>
+        <a routerLink="/track-complaint" routerLinkActive="nav-item-active" class="nav-item">Tracking</a>
+        <a routerLink="/complaints" routerLinkActive="nav-item-active" class="nav-item">Dashboard</a>
+        <a routerLink="/profile" routerLinkActive="nav-item-active" class="nav-item mobile-only">My Profile</a>
+        <a (click)="logout()" class="nav-item mobile-only"
+          style="cursor: pointer; color: var(--danger-color);">Logout</a>
+      </ng-container>
+
+      <!-- Staff Links -->
+      <ng-container *ngIf="authService.isLoggedIn && authService.userRole === 'Staff'">
+        <a routerLink="/" routerLinkActive="nav-item-active" [routerLinkActiveOptions]="{exact: true}"
+          class="nav-item">Home</a>
+        <a routerLink="/staff/dashboard" routerLinkActive="nav-item-active" class="nav-item">Dashboard</a>
+        <a (click)="logout()" class="nav-item mobile-only"
+          style="cursor: pointer; color: var(--danger-color);">Logout</a>
+      </ng-container>
+
+      <!-- Admin Links -->
+      <ng-container *ngIf="authService.isLoggedIn && authService.userRole === 'Admin'">
+        <a routerLink="/" routerLinkActive="nav-item-active" [routerLinkActiveOptions]="{exact: true}"
+          class="nav-item">Home</a>
+        <a routerLink="/admin/dashboard" routerLinkActive="nav-item-active" class="nav-item">Dashboard</a>
+        <a routerLink="/admin/analytics" routerLinkActive="nav-item-active" class="nav-item">Analytics</a>
+        <a (click)="logout()" class="nav-item mobile-only"
+          style="cursor: pointer; color: var(--danger-color);">Logout</a>
+      </ng-container>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="nav-right-actions">
+      <a *ngIf="!authService.isLoggedIn" routerLink="/register" class="contact-us-btn desktop-only">Register</a>
+
+      <div class="user-profile-nav" *ngIf="authService.isLoggedIn">
+        <!-- Notification Bell -->
+        <button mat-icon-button [matMenuTriggerFor]="notifMenu" class="notif-btn" (menuOpened)="markAllRead()"
+          style="color: #000;">
+          <mat-icon [class.has-unread]="unreadCount > 0">notifications</mat-icon>
+          <span class="unread-badge" *ngIf="unreadCount > 0">{{unreadCount}}</span>
+        </button>
+
+        <mat-menu #notifMenu="matMenu" class="notif-dropdown">
+          <div class="notif-header">
+            <span>Notifications</span>
+            <span class="notif-count">{{unreadCount}} New</span>
+          </div>
+          <div class="notif-list">
+            <div *ngIf="notifications.length === 0" class="no-notif">No notifications</div>
+            <button mat-menu-item *ngFor="let n of notifications" [class.unread]="!n.is_read">
+              <mat-icon [style.color]="n.is_read ? '#94a3b8' : '#3B82F6'">info</mat-icon>
+              <div class="notif-content">
+                <p class="notif-msg">{{n.message}}</p>
+                <span class="notif-time">{{n.created_at | date:'short'}}</span>
+              </div>
+            </button>
+          </div>
+        </mat-menu>
+
+        <span class="user-name" style="color: #000;">
+          <mat-icon
+            style="font-size: 1.2rem; width: 1.2rem; height: 1.2rem; margin-right: 0.25rem;">account_circle</mat-icon>
+          {{authService.currentUser?.name}}
+        </span>
+        <button routerLink="/profile" class="btn-logout desktop-only"
+          style="border-radius: 999px; margin-right: 0.5rem; color: var(--accent-color); border-color: var(--accent-color);">Profile</button>
+        <button (click)="logout()" class="btn-logout desktop-only" style="border-radius: 999px;">Logout</button>
+      </div>
+
+      <button class="mobile-toggle" (click)="toggleMobileMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content" style="padding-top: 0; flex: 1;">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <div class="container footer-content">
+    <div class="footer-brand">
+      <h3 style="margin-bottom: 0.5rem;">
+        <mat-icon style="color: black; margin-right: 0.5rem;">security</mat-icon> ResolveDesk
+      </h3>
+      <p style="margin: 0; font-size: 0.95rem; color: #94A3B8; max-width: 320px;">
+        Centralized grievance redressal system empowering citizens with faster resolutions and transparent tracking.
+      </p>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Company</h4>
+      <a routerLink="/">Home</a>
+      <a routerLink="/" fragment="about">About Us</a>
+      <a routerLink="/" fragment="features">Features</a>
+    </div>
+
+    <div class="footer-links-group">
+      <h4>Support</h4>
+      <a routerLink="/track-complaint">Track Status</a>
+      <a routerLink="/" fragment="how-it-works">Help Center</a>
+      <a routerLink="/" fragment="about">Contact Support</a>
+    </div>
+
+    <div class="footer-info">
+      <h4>Contact</h4>
+      <p>
+        <span class="footer-icon-wrapper">
+          <mat-icon style="font-size: 1.1rem; width: 1.1rem; height: 1.1rem;">email</mat-icon>
+        </span>
+        <a href="mailto:support@resolvedesk.com" class="footer-contact-link">support&#64;resolvedesk.com</a>
+      </p>
+      <p>
+        <span class="footer-icon-wrapper">
+          <mat-icon style="font-size: 1.1rem; width: 1.1rem; height: 1.1rem;">phone</mat-icon>
+        </span>
+        <a href="tel:+18001234567" class="footer-contact-link">+1 (800) 123-4567</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; 2025 ResolveDesk. All rights reserved.</p>
+  </div>
+</footer>

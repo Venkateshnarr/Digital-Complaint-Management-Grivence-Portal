@@ -1,0 +1,246 @@
+.staff-dashboard {
+    padding: 2.5rem;
+    padding-top: 110px;
+    /* Offset for fixed navbar */
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.header-section {
+    margin-bottom: 2rem;
+}
+
+.header-section h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: white;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+/* Card Variations with Gradients */
+.total-card .stat-icon {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.pending-card .stat-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.progress-card .stat-icon {
+    background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.resolved-card .stat-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+}
+
+.no-complaints {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--border-color);
+    color: var(--text-secondary);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.status-select {
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.filter-field {
+    width: 200px;
+}
+
+::ng-deep .filter-field .mat-mdc-text-field-wrapper {
+    background-color: white !important;
+}
+
+.table-card {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+}
+
+tr.mat-mdc-header-row {
+    background-color: #F8FAFC;
+    height: 52px;
+}
+
+th.mat-header-cell {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td.mat-cell {
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+tr.mat-mdc-row:hover {
+    background-color: #F1F5F9;
+}
+
+@media (max-width: 768px) {
+    .staff-dashboard {
+        padding: 1.5rem;
+        padding-top: 90px;
+    }
+
+    .header-section h1 {
+        font-size: 1.75rem;
+        flex-wrap: wrap;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .filter-section {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .filter-field {
+        width: 100%;
+    }
+
+    .table-card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
+}

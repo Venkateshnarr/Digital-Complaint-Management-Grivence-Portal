@@ -1,0 +1,175 @@
+<div class="home-container">
+    <!-- Modern Hero Section -->
+    <div class="hero-section">
+        <div class="container hero-flex-wrapper">
+            <div class="hero-left">
+                <h1 class="hero-title-main">A Simple, Transparent, and Efficient Way to Raise and Track Complaints</h1>
+                <p class="hero-subtitle-main">Submit complaints, monitor progress in real time, and ensure faster
+                    resolution through a centralized grievance management system.</p>
+                <div class="hero-actions-main">
+                    <a routerLink="/complaints/new" class="btn-pill btn-dark">Get Started</a>
+                </div>
+
+                <div class="scroll-indicator">
+                    <div class="scroll-dot"></div>
+                    <span>Scroll</span>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="visual-container">
+                    <img src="assets/images/hero-visual.png" alt="Digital Grievance Resolution" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section with Stats -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why This Portal?</h2>
+                <p>Ensuring accountability by allowing users, staff, and administrators to manage, track, and resolve
+                    complaints efficiently.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">{{stats?.total || 0}}</span>
+                    <span class="stat-label">Total Complaints</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">{{stats?.resolved || 0}}</span>
+                    <span class="stat-label">Resolved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">{{stats?.avgResolutionTime || 24}}h</span>
+                    <span class="stat-label">Avg. Resolution</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">{{stats?.activeStaff || 0}}</span>
+                    <span class="stat-label">Total Staff</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>A seamless process from submission to resolution.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Register & Login</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Create your account to get started.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Submit Details</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Provide complaint details and attachments.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Assign Staff</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Complaint is assigned to relevant staff.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>Track Status</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Get real-time updates on progress.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <h3>Resolution</h3>
+                    <p style="color: #94a3b8; font-size: 0.9rem;">Issue resolved and ticket closed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features for Modern Grievance Management</h2>
+                <p>Everything you need to manage, track, and resolve complaints efficiently with cutting-edge
+                    technology.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="feature-card" style="animation-delay: 0.1s">
+                    <div class="feature-icon icon-orange">
+                        <mat-icon>bolt</mat-icon>
+                    </div>
+                    <h3>Lightning Fast Processing</h3>
+                    <p>AI-powered system categorizes and routes complaints instantly to the right department for swift
+                        resolution.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon icon-blue">
+                        <mat-icon>security</mat-icon>
+                    </div>
+                    <h3>Secure & Confidential</h3>
+                    <p>End-to-end encryption ensures your sensitive information remains private and protected at all
+                        times.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon icon-purple">
+                        <mat-icon>notifications_active</mat-icon>
+                    </div>
+                    <h3>Real-time Notifications</h3>
+                    <p>Stay updated with instant alerts via email, SMS, and push notifications at every step of the
+                        process.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon icon-green">
+                        <mat-icon>analytics</mat-icon>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Gain insights into complaint trends and resolution times with comprehensive graphical reports and
+                        dashboards.</p>
+                </div>
+                <!-- Card 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon icon-red">
+                        <mat-icon>lock</mat-icon>
+                    </div>
+                    <h3>Data Privacy</h3>
+                    <p>Strict data privacy controls to ensure that your personal information is accessible only to
+                        authorized personnel.</p>
+                </div>
+                <!-- Card 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon icon-indigo">
+                        <mat-icon>schedule</mat-icon>
+                    </div>
+                    <h3>24/7 Availability</h3>
+                    <p>Submit and track your grievances anytime, anywhere, with our round-the-clock available portal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section><!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <h2>Have an Issue? Let Us Know.</h2>
+            <p>Don't let grievances go unheard. Resolve them today.</p>
+            <div class="hero-actions">
+                <a routerLink="/complaints/new" class="btn btn-primary btn-lg"
+                    style="background: white; color: var(--accent-color);">Raise a Complaint</a>
+                <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-outline btn-lg"
+                    style="background-color: white; color: black; margin: 0 1rem;">Register Now</a>
+            </div>
+        </div>
+    </section>
+</div>
