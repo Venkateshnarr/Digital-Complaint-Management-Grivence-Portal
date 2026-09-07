@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     providedIn: 'root'
 })
 export class NotificationService {
-    private apiUrl = 'https://digital-complaint-management-grivence-portal-production.up.railway.app/api/users';
+    private apiUrl = 'https://digital-complaint-management-grivence-portal-production.up.railway.app/api/notifications';
 
     constructor(
         private http: HttpClient,
