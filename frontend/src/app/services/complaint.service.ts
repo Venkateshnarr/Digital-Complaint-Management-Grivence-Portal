@@ -7,8 +7,7 @@ import { Complaint, ComplaintCreate, ComplaintUpdate, ComplaintStats } from '../
     providedIn: 'root'
 })
 export class ComplaintService {
-    private apiUrl = 'http://localhost:3000/api/complaints';
-
+   private apiUrl = 'https://digital-complaint-management-grivence-portal-production.up.railway.app/api/users';
     constructor(private http: HttpClient) { }
 
     // Create a new complaint
