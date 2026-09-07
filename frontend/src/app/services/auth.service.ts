@@ -7,7 +7,7 @@ import { User, UserRegistration, UserLogin, AuthResponse } from '../models/user.
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:3000/api/users';
+    private apiUrl = 'https://digital-complaint-management-grivence-portal-production.up.railway.app/api/users';
     private currentUserSubject = new BehaviorSubject<User | null>(null);
     public currentUser$ = this.currentUserSubject.asObservable();
 
